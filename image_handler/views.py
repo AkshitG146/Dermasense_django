@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import numpy as np
 import cv2 as cv
@@ -15,13 +16,13 @@ decoder = {
     6: 'Dermatofibroma'
 }
 
-ml_model = load_model('logo_app/ml_model.h5')
+ml_model = load_model('image_handler/ml_model.h5')
 
 
 # Create your views here.
 
 def home(request):
-    return  HttpResponse("commit 2")
+    return  HttpResponse("yep you are here")
 
 def predict(request):
     if request.method == 'POST':
@@ -31,7 +32,7 @@ def predict(request):
             image_array = np.frombuffer(image_data, np.uint8)
             img = cv.imdecode(image_array, cv.IMREAD_COLOR)
             if img is None: return JsonResponse({'error': 'Could not decode the image.'}, status=400)
-            
+
             input_image = cv.resize(img, (224, 224))
             input_image = input_image.astype(np.float32) / 255.0
             input_image = np.expand_dims(input_image, axis=0)
