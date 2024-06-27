@@ -4,5 +4,5 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name='home'),
-    # path('handle-image/', views.handle_image, name='image_handler'),
+    path('predict/', views.predict, name='predict'),
 ]
