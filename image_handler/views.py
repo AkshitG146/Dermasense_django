@@ -17,14 +17,16 @@ decoder = {
     6: 'Dermatofibroma'
 }
 
-model_path = os.path.join(os.path.dirname(__file__), 'ml_model.h5')
+import h5py
+
+model_path = '/home/ubuntu/Dermasense_django/image_handler/ml_model.h5'
 
 try:
-    ml_model = load_model(model_path)
-    print("Model loaded successfully")
+    with h5py.File(model_path, 'r') as f:
+        # Verify you can access keys or attributes in the file
+        print(list(f.keys()))  # List all the keys in the HDF5 file
 except OSError as e:
-    print("Error loading model:", e)
-
+    print("Error opening file:", e)
 # Create your views here.
 
 def home(request):
