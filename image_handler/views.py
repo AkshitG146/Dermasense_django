@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import numpy as np
 import cv2 as cv
+import os
 from tensorflow.keras.models import load_model
 
 decoder = {
@@ -16,8 +17,13 @@ decoder = {
     6: 'Dermatofibroma'
 }
 
-ml_model = load_model('image_handler/ml_model.h5')
+model_path = os.path.join(os.path.dirname(__file__), 'ml_model.h5')
 
+try:
+    ml_model = load_model(model_path)
+    print("Model loaded successfully")
+except OSError as e:
+    print("Error loading model:", e)
 
 # Create your views here.
 
